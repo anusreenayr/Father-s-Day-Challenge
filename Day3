@@ -1,0 +1,31 @@
+# MAJORITY ELEMENT
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+        return nums[n//2]
+
+# MINIMUM REMOVE TO MAKE VALID PARENTHESES
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        stack = []
+        to_remove = set()
+        
+        for i, char in enumerate(s):
+            if char == '(':
+                stack.append(i)  # Push index of '('
+            elif char == ')':
+                if stack:
+                    stack.pop()  # Match with the latest '('
+                else:
+                    to_remove.add(i)  # Unmatched ')'
+        
+        # Add remaining unmatched '(' to removal set
+        to_remove.update(stack)
+        
+        result = []
+        for i, char in enumerate(s):
+            if i not in to_remove:
+                result.append(char)
+        
+        return ''.join(result)
