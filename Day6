@@ -1,0 +1,41 @@
+# BASIC CALCULATOR
+class Solution:
+    def calculate(self, s: str) -> int:
+        ans = 0
+        num = 0
+        sign = 1
+        stack = [sign]
+        
+        for c in s:
+            if c.isdigit():
+                num = num * 10 + int(c)
+            elif c == '(':
+                stack.append(sign)
+            elif c == ')':
+                stack.pop()
+            elif c in '+-':
+                ans += sign * num
+                num = 0
+                sign = (1 if c == '+' else -1) * stack[-1]
+        
+        # Don't forget the last number!
+        ans += sign * num
+        return ans
+
+# MOVE ZEROES
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        non_zero = 0
+
+        for i in range (len(nums)):
+            if nums[i] != 0:
+                nums[non_zero] = nums[i]
+                non_zero += 1
+        for i in range(non_zero, len(nums)):
+            nums[i] = 0
+
+
+        
