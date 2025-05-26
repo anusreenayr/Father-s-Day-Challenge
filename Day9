@@ -1,0 +1,18 @@
+# FIND THE INDEX OF THE FIRST OCCURENCE IN A STRING
+class Solution:
+    def strStr(self, haystack, needle):
+        for i in range(len(haystack) - len(needle) + 1):
+            if haystack[i:i+len(needle)] == needle:
+                return i
+        return -1
+
+# Median of sorted arrays
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        merged = sorted(nums1 + nums2)
+        n = len(merged)
+        mid = n // 2
+
+        if n % 2:
+            return merged[mid]
+        return (merged[mid -1] + merged[mid]) / 2
