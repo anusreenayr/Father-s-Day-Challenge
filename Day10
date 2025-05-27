@@ -1,1 +1,50 @@
+# PALINDROME LINKED LIST
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        l = []
+        curr = head
+        while curr:
+            l.append(curr.val)
+            curr = curr.next
+        return l == l[::-1]
+
+# Smallest Range Covering Elements from K lists
+
+import heapq
+from typing import List
+
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        min_heap = []
+        current_max = -float('inf')
+        start = -float('inf')
+        end = float('inf')
+        
+        # Initialize the heap with the first element of each list
+        for i in range(len(nums)):
+            if nums[i]:  # Ensure the list is not empty
+                heapq.heappush(min_heap, (nums[i][0], i, 0))
+                current_max = max(current_max, nums[i][0])
+        
+        while min_heap:
+            current_min, list_idx, elem_idx = heapq.heappop(min_heap)
+            
+            # Update the smallest range if a smaller range is found
+            if current_max - current_min < end - start:
+                start, end = current_min, current_max
+            
+            # Move to the next element in the list
+            if elem_idx + 1 < len(nums[list_idx]):
+                next_elem = nums[list_idx][elem_idx + 1]
+                heapq.heappush(min_heap, (next_elem, list_idx, elem_idx + 1))
+                current_max = max(current_max, next_elem)
+            else:
+                # If any list is exhausted, break early
+                break
+        
+        return [start, end]
 
