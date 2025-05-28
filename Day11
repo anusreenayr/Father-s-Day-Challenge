@@ -1,0 +1,48 @@
+# CIRCULAR ARRAY LOOP
+
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+        n = len(nums)
+        for i in range(n):
+            if nums[i] == 0:
+                continue
+            direction = nums[i] > 0
+            
+            slow = fast = i
+            while True:
+                slow = (slow + nums[slow]) % n
+                if (nums[slow] > 0) != direction:
+                    break
+                
+                fast = (fast + nums[fast]) % n
+                if (nums[fast] > 0) != direction:
+                    break
+                fast = (fast + nums[fast]) % n
+                if (nums[fast] > 0) != direction:
+                    break
+                
+                # Check for cycle
+                if slow == fast:
+                    # Ensure cycle length > 1
+                    if (slow + nums[slow]) % n != slow:
+                        return True
+                    break
+                    
+            # Mark visited path
+            slow = i
+            while nums[slow] * nums[i] > 0:
+                nums[slow], slow = 0, (slow + nums[slow]) % n
+                
+        return False
+
+
+# REVERSE STRING
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        l, r = 0, len(s) - 1
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
+
+    
