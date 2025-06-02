@@ -1,0 +1,49 @@
+# CLONE GRAPH
+from collections import deque
+
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
+        
+        visited = {}
+        queue = deque([node])
+        visited[node] = Node(node.val, [])
+        
+        while queue:
+            current_node = queue.popleft()
+            for neighbor in current_node.neighbors:
+                if neighbor not in visited:
+                    visited[neighbor] = Node(neighbor.val, [])
+                    queue.append(neighbor)
+                visited[current_node].neighbors.append(visited[neighbor])
+        
+        return visited[node]
+
+
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        curr, stack = root, []
+        res = []
+
+        while curr or stack:
+            if curr:
+                res.append(curr.val)
+                stack.append(curr.right)
+                curr = curr.left
+            else:
+                curr = stack.pop()
+        return res
+
+        
