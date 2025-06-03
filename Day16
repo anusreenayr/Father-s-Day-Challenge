@@ -1,0 +1,38 @@
+# VALID MOUNTAIN ARRAY
+class Solution:
+    def validMountainArray(self, arr: List[int]) -> bool:
+        n = len(arr)
+        if n < 3:
+            return False
+        i = 0
+        # Walk up - strictly increasing
+        while i + 1 < n and arr[i] < arr[i + 1]:
+            i += 1
+        # Peak can't be first or last
+        if i == 0 or i == n - 1 or arr[i] == arr[i + 1]:
+            return False
+        # Walk down - strictly decreasing
+        while i + 1 < n and arr[i] > arr[i + 1]:
+            i += 1
+        return i == n - 1
+
+# SUCCESSFUL PAIRS OF SPELLS AND POTIONS
+class Solution:
+    def successfulPairs(self, spells: List[int], potions: List[int], success: int) -> List[int]:
+        potions.sort()
+        n = len(potions)
+        result = []
+
+        for spell in spells:
+            #calculating the min potion needed
+            min_potion = (success + spell - 1) // spell
+
+            l, r = 0, n
+            while l < r:
+                mid = (l + r) // 2
+                if potions[mid] >= min_potion:
+                    r = mid
+                else:
+                    l = mid + 1
+            result.append(n - l)
+        return result
